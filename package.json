@@ -1,0 +1,23 @@
+{
+  "name": "dsh-menu",
+  "version": "1.0.0",
+  "description": "Custom right-click context menu for the sidebar workspace files tree (new folder / rename / reveal / open in browser / open in VS Code / copy path / download / delete), replacing the browser default menu.",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js"
+  },
+  "dsh": {
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-api-session-controller",
+        "@deepseek-ai/dsh-api-remotes",
+        "@deepseek-ai/dsh-client-ui-sidebar-right"
+      ]
+    }
+  }
+}

@@ -1,0 +1,3 @@
+- insert:
+    - id: workspace-files-menu
+      name: 'dsh-menu'
