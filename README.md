@@ -3,7 +3,9 @@
 > 为 DeepSeek Harness **Web 客户端**侧边栏的「工作区文件」树添加自定义右键菜单，替代浏览器默认菜单。
 > 纯前端 + Host 路由实现，**无第三方依赖、无构建步骤**。项目名为 `dsh-menu`，后续可在此基础上扩展更多菜单。
 
-![右键菜单效果](./screenshot.png)
+| 深色模式 | 浅色模式 |
+|:---:|:---:|
+| ![深色模式](./screenshot-dark.png) | ![浅色模式](./screenshot-light.png) |
 
 <sub>右键「工作区文件」中的任意行 → 自定义菜单（新建文件夹 / 重命名 / 在文件管理器中显示 / 在浏览器中打开 / 在 VS Code 中打开 / 复制文件路径 / 下载文件夹 / 删除）</sub>
 
@@ -43,7 +45,8 @@ dsh-menu/
 ├── client.js         # Client 半区：右键菜单 UI（约 680 行）
 ├── package.json      # 包元信息 + dsh.client 注入声明
 ├── cordis.patch.yml  # 把插件并入 Harness profile 的补丁
-├── screenshot.png    # 菜单效果图（本文档引用）
+├── screenshot-dark.png   # 深色模式效果图
+├── screenshot-light.png  # 浅色模式效果图
 └── README.md         # 本文档
 ```
 
