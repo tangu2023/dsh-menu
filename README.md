@@ -8,6 +8,12 @@
 > 为 DeepSeek Harness **Web 客户端**侧边栏的「工作区文件」树添加自定义右键菜单，替代浏览器默认菜单。
 > 纯前端 + Host 路由实现，**无第三方依赖、无构建步骤**。项目名为 `dsh-menu`，后续可在此基础上扩展更多菜单。
 
+**已发布到 npm**，一行命令装好（装完重启宿主进程 + 浏览器硬刷新）：
+
+```sh
+dsh plugin --profile web add dsh-menu
+```
+
 | 深色模式 | 浅色模式 |
 |:---:|:---:|
 | ![深色模式](./screenshot-dark.png) | ![浅色模式](./screenshot-light.png) |
@@ -46,9 +52,9 @@
 
 ```
 dsh-menu/
-├── index.js          # Host 半区：全部文件系统操作路由（约 730 行）
+├── index.js          # Host 半区：全部文件系统操作路由（约 743 行）
 ├── client.js         # Client 半区：右键菜单 UI（约 680 行）
-├── package.json      # 包元信息 + dsh.client 注入声明
+├── package.json      # 包元信息 + dsh.bundle / dsh.client 声明
 ├── cordis.patch.yml  # 把插件并入 Harness profile 的补丁
 ├── screenshot-dark.png   # 深色模式效果图
 ├── screenshot-light.png  # 浅色模式效果图
@@ -154,6 +160,7 @@ curl -X POST http://127.0.0.1:12012/api/workspace-files-menu/rename \
 | Host 路由 500 / 404 | 插件是 enable 状态但模块未重载 → 重启 DSH 宿主进程 |
 | 「在浏览器中打开」403 | 目标不在当前会话工作区内 |
 | 重命名报「已存在」 | 目标名已占用（409），换名即可 |
+| 下载中文名文件报 `500` | 已在 `1.0.0` 修复（RFC 6266 响应头编码）；旧版本请升级 |
 | 安装 bundle 报 `'pnpm' 不是内部或外部命令` | 宿主进程找不到 `pnpm` → 执行 `npm i -g pnpm`，或在宿主工作目录放一个 `pnpm.cmd` shim 指向全局 pnpm |
 
 ---
@@ -189,6 +196,32 @@ curl -X POST http://127.0.0.1:12012/api/workspace-files-menu/rename \
 
 - **Windows（主要测试平台）**：VS Code 通过 `PATH` 中的 `code` 命令推导真实 `Code.exe`，并回退常见安装目录（`%LOCALAPPDATA%\Programs`、`Program Files (x86)`、`Program Files`）；已实测 `D:\Program Files\Microsoft VS Code`。
 - **macOS / Linux**：VS Code 候选路径包含 `/Applications`、`/usr/bin/code`、`/usr/local/bin/code` 等；其余路由（下载 / 浏览器打开 / ZIP 打包）跨平台通用。
+
+---
+
+## 🌐 生态与分发
+
+| 渠道 | 地址 | 状态 |
+|------|------|------|
+| **npm** | [`dsh-menu`](https://www.npmjs.com/package/dsh-menu) | ✅ 已发布 |
+| **GitHub** | [tangu2023/dsh-menu](https://github.com/tangu2023/dsh-menu) | ✅ 公开，MIT |
+| **插件索引** | GitHub topic [`dsh-plugin`](https://github.com/topics/dsh-plugin) | ✅ 已打标（索引站按此 topic 定期同步） |
+| **社区清单** | [awesome-dsh-plugin PR #6885](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/pull/6885) | ⏳ 已提交，等待维护者合并 |
+
+合并后即可在 DSH 设置面板内的 [dsh-market](https://github.com/dsh-market/dsh-market) 插件市场中搜到并一键安装。
+
+---
+
+## 📝 版本日志
+
+### 1.0.1
+- 文档：README 增加 npm / 下载量 / license / topic 徽章；安装章节改为 npm 优先；补充 pnpm 新包保护（`minimumReleaseAge`）说明。
+
+### 1.0.0 — 首个公开版本
+- 8 个菜单项：新建文件夹 / 重命名 / 在文件管理器中显示 / 在浏览器中打开 / 在 VS Code 中打开 / 复制文件路径 / 下载（文件夹流式 ZIP）/ 删除（二次确认）。
+- 6 条 Host 路由，含工作区边界双向往返校验、CSP sandbox 隔离、零依赖流式 ZIP 打包器。
+- 毛玻璃卡片 UI，深色 / 浅色主题自适应，中英双语。
+- **修复**：非 ASCII（中文等）文件名下载时响应头构造抛异常导致 `500`；现按 RFC 6266 输出 `filename` + `filename*=UTF-8''…`。
 
 ---
 
