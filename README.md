@@ -1,5 +1,10 @@
 # dsh-menu — DeepSeek Harness 插件（当前：工作区文件右键菜单）
 
+[![npm version](https://img.shields.io/npm/v/dsh-menu.svg)](https://www.npmjs.com/package/dsh-menu)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-menu.svg)](https://www.npmjs.com/package/dsh-menu)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![dsh-plugin](https://img.shields.io/badge/topic-dsh--plugin-2ea44f.svg)](https://github.com/topics/dsh-plugin)
+
 > 为 DeepSeek Harness **Web 客户端**侧边栏的「工作区文件」树添加自定义右键菜单，替代浏览器默认菜单。
 > 纯前端 + Host 路由实现，**无第三方依赖、无构建步骤**。项目名为 `dsh-menu`，后续可在此基础上扩展更多菜单。
 
@@ -80,24 +85,35 @@ dsh-menu/
 
 **前置**：已部署并运行 DeepSeek Harness（含 Web GUI）；宿主进程可直接运行 Node.js 与 `pnpm`。
 
-### 方式 A：一行命令（推荐）
+### 方式 A：从 npm 安装（推荐）
+
+```sh
+dsh plugin --profile web add dsh-menu
+```
+
+### 方式 B：从 GitHub 安装
 
 ```sh
 dsh plugin --profile web add github:tangu2023/dsh-menu
 ```
 
-然后**重启 DSH 宿主进程**、浏览器硬刷新即可。本插件**零依赖、无构建步骤**，因此 git 安装不需要任何 build 授权。
-
-### 方式 B：从本地目录安装
+### 方式 C：从本地目录安装
 
 1. 把整个仓库目录放到本地任意位置（例如 `D:\plugins\dsh-menu`），**无需构建**。
 2. 在 DSH 的「插件管理」中**安装该 bundle**，目标选择仓库目录的**绝对路径**。插件管理器会自动应用 `cordis.patch.yml`（把 `dsh-menu` 插入当前 profile）。
+
+### 三种方式装完后都一样
+
 3. **重启 DSH 宿主进程**让 Host 半区加载（插件管理器的 enable/disable 不会重载已缓存的模块）。
 4. 浏览器**硬刷新**（`Ctrl+Shift+R`）加载 Client 半区。
 
 > 说明：`cordis.patch.yml` 是唯一要求的配置文件，请勿手工修改 profile 下的 `package.json` / `cordis.patch.yml`，统一由插件管理器写入。
 >
+> 本插件**零依赖、无构建步骤**，所以 git 安装不需要任何 build 授权。
+>
 > 卸载：`dsh plugin --profile web remove dsh-menu`（或插件管理器中禁用后移除）。
+>
+> 若 pnpm 提示新包保护（`minimumReleaseAge`），`dsh plugin add` 会自动把 `dsh-menu` 加入 profile 的 `minimumReleaseAgeExclude`，无需手动处理。
 
 ---
 
