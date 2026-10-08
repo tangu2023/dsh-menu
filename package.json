@@ -1,6 +1,6 @@
 {
   "name": "dsh-menu",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Custom right-click context menu for the sidebar workspace files tree: new folder, rename, reveal in file manager, open in browser, open in VS Code, copy path, streaming ZIP download, and delete.",
   "type": "module",
   "exports": {

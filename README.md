@@ -214,6 +214,9 @@ curl -X POST http://127.0.0.1:12012/api/workspace-files-menu/rename \
 
 ## 📝 版本日志
 
+### 1.0.2
+- 文档：新增「生态与分发」章节（npm / GitHub / topic / 社区清单 / dsh-market）与本节版本日志；顶部补一行安装速览；常见问题补充中文文件名下载的排查项。
+
 ### 1.0.1
 - 文档：README 增加 npm / 下载量 / license / topic 徽章；安装章节改为 npm 优先；补充 pnpm 新包保护（`minimumReleaseAge`）说明。
 
