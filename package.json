@@ -1,12 +1,40 @@
 {
   "name": "dsh-menu",
   "version": "1.0.0",
-  "description": "Custom right-click context menu for the sidebar workspace files tree (new folder / rename / reveal / open in browser / open in VS Code / copy path / download / delete), replacing the browser default menu.",
-  "private": true,
+  "description": "Custom right-click context menu for the sidebar workspace files tree: new folder, rename, reveal in file manager, open in browser, open in VS Code, copy path, streaming ZIP download, and delete.",
   "type": "module",
   "exports": {
     ".": "./index.js",
     "./client": "./client.js"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE",
+    "screenshot-dark.png",
+    "screenshot-light.png"
+  ],
+  "keywords": [
+    "deepseek",
+    "harness",
+    "dsh",
+    "dsh-plugin",
+    "context-menu",
+    "workspace-files",
+    "file-manager",
+    "web-ui"
+  ],
+  "license": "MIT",
+  "author": "tangu2023",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tangu2023/dsh-menu.git"
+  },
+  "homepage": "https://github.com/tangu2023/dsh-menu#readme",
+  "bugs": {
+    "url": "https://github.com/tangu2023/dsh-menu/issues"
   },
   "dsh": {
     "bundle": { "patch": "./cordis.patch.yml" },

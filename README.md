@@ -78,7 +78,17 @@ dsh-menu/
 
 ## 📥 安装
 
-**前置**：已部署并运行 DeepSeek Harness（含 Web GUI）；宿主进程可直接运行 Node.js。
+**前置**：已部署并运行 DeepSeek Harness（含 Web GUI）；宿主进程可直接运行 Node.js 与 `pnpm`。
+
+### 方式 A：一行命令（推荐）
+
+```sh
+dsh plugin --profile web add github:tangu2023/dsh-menu
+```
+
+然后**重启 DSH 宿主进程**、浏览器硬刷新即可。本插件**零依赖、无构建步骤**，因此 git 安装不需要任何 build 授权。
+
+### 方式 B：从本地目录安装
 
 1. 把整个仓库目录放到本地任意位置（例如 `D:\plugins\dsh-menu`），**无需构建**。
 2. 在 DSH 的「插件管理」中**安装该 bundle**，目标选择仓库目录的**绝对路径**。插件管理器会自动应用 `cordis.patch.yml`（把 `dsh-menu` 插入当前 profile）。
@@ -86,6 +96,8 @@ dsh-menu/
 4. 浏览器**硬刷新**（`Ctrl+Shift+R`）加载 Client 半区。
 
 > 说明：`cordis.patch.yml` 是唯一要求的配置文件，请勿手工修改 profile 下的 `package.json` / `cordis.patch.yml`，统一由插件管理器写入。
+>
+> 卸载：`dsh plugin --profile web remove dsh-menu`（或插件管理器中禁用后移除）。
 
 ---
 

@@ -642,7 +642,7 @@ window.__ModuleLoader__.load({
 						const targetInfo = scope.sidebarRight.commandTarget(row);
 						const sessionId = targetInfo === void 0 ? void 0 : targetInfo.sessionId;
 						if (sessionId === void 0) return;
-						const name = String(path).split("/").filter(Boolean).pop() || String(path);
+						const name = String(path).split(/[\\/]/).filter(Boolean).pop() || String(path);
 						menuStore.set({
 							open: true,
 							x: event.clientX,

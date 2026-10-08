@@ -389,6 +389,19 @@ function escapeHtml(value) {
     { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]);
 }
 
+/**
+ * Build an attachment Content-Disposition value that survives non-ASCII names.
+ * HTTP header values are ByteStrings, so a raw CJK name throws while the
+ * Response is constructed; RFC 6266 keeps an ASCII fallback plus the UTF-8 form.
+ */
+function contentDisposition(name, suffix = "") {
+  const full = `${name}${suffix}`;
+  const ascii = full.replace(/[^\x20-\x7e]/g, "_").replace(/["\\]/g, "_") || "download";
+  const encoded = encodeURIComponent(full)
+    .replace(/['()*]/g, (ch) => `%${ch.charCodeAt(0).toString(16).toUpperCase()}`);
+  return `attachment; filename="${ascii}"; filename*=UTF-8''${encoded}`;
+}
+
 /** A minimal directory listing page for the open-in-browser route. */
 async function directoryListingHtml(ctx, sessionId, dirPath) {
   const entries = await readdir(dirPath, { withFileTypes: true });
@@ -705,7 +718,7 @@ export function apply(ctx) {
           response = new Response(streamFolderZip(target.hostPath, name, request.signal), {
             headers: {
               "content-type": "application/zip",
-              "content-disposition": `attachment; filename="${name}.zip"`,
+              "content-disposition": contentDisposition(name, ".zip"),
               "cache-control": "no-store",
             }
           });
@@ -713,7 +726,7 @@ export function apply(ctx) {
           response = new Response(Readable.toWeb(createReadStream(target.hostPath)), {
             headers: {
               "content-type": "application/octet-stream",
-              "content-disposition": `attachment; filename="${name}"`,
+              "content-disposition": contentDisposition(name),
               "cache-control": "no-store",
             }
           });
